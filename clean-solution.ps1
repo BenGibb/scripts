@@ -11,11 +11,15 @@
 
 .PARAMETER tfs 
     Also deletes TFS binding files.
+
+.PARAMETER pdb 
+    Also deletes PDB files.
 #>  
 
 param([string]$path,
     [switch]$whatif,
     [switch]$delete,
+    [switch]$pdb,
     [switch]$tfs)
 
 if (-not ($whatif) `
@@ -41,7 +45,10 @@ $params = @{
 # Clean a solution from unnecessary stuff, i.e. before sending it via mail.
 ls bin -r | ri @params #remove BIN folders
 ls obj -r | ri @params #remove OBJ folders
-ls *.pdb -r | ri @params #remove remaining PDBs, if any
+if ($pdb) #remove remaining PDBs, if any
+{
+    ls *.pdb -r | ri @params 
+}
 if ($tfs) #remove TFS mappings
 {
     ls *.vssscc -r | ri @params
