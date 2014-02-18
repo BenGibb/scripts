@@ -1,0 +1,29 @@
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Web;
+using System.Web.Mvc;
+using System.Web.Security;
+using EZAP3.Controllers;
+using EZAP3.DomainModel;
+using EZAP3.Services;
+
+namespace EZAP3
+{
+    public static class Helpers
+    {
+        public static IEnumerable<string> GetErrors(this ModelStateDictionary modelState)
+        {
+            return from ms in modelState
+                where ms.Value.Errors.Count > 0
+                select string.Format("{0}: ", ms.Key)
+                       + ms.Value.Errors.Aggregate(
+                           "",
+                           (acc,
+                               model) => string.Format("{0}{1}\n", acc, model.ErrorMessage));
+        }
+    }
+}
