@@ -19,6 +19,7 @@ cinst curl
 cinst fiddler4
 cinst procexp
 cinst webmatrix
+cinst pushbullet
 cinst adblockplusfirefox
 
 pip install --upgrade httpie
