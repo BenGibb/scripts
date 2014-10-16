@@ -1,0 +1,7 @@
+[
+    {
+        "caption": "Clean crmregister IDs",
+        "command": "reg_replace",
+        "args": {"replacements": ["remove_crmregister_ids"]}
+    }
+]

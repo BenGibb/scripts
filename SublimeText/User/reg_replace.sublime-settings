@@ -1,0 +1,36 @@
+
+{
+    // Use sub notify if available
+    "use_sub_notify": true,
+
+    "replacements": {
+        // Example replacements
+        "remove_crmregister_ids": {
+            "find": "Id=\"[0-9a-z-]{36}\"",
+            "replace": "Id=\"00000000-0000-0000-0000-000000000000\"",
+            "greedy": true,
+            "case": false
+        },
+        // remove_json_dangling_commas
+        "remove_json_dangling_commas": {
+            "find": ",([\\r\\n\\s]*)(\\]|\\})",
+            "replace": "\\1\\2",
+            "greedy": true,
+            "scope_filter": ["-string", "-comment"]
+        },
+        "remove_html_comments": {
+            "find": "<!--[\\s\\S]+?-->",
+            "replace": "",
+            "scope_filter": ["!comment"],
+            "greedy": true,
+            "case": true
+        },
+        // Delete a comment or comment blocks
+        "remove_comments": {
+            "scope": "comment",
+            "find" : "([^\\n\\r]+)",
+            "replace": "",
+            "greedy_replace": true
+        }
+    },
+}
