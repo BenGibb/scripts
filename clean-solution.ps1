@@ -40,6 +40,7 @@ cd $path
 $params = @{
     whatif = $whatif
     recurse = $true
+    force = $true
 }
 
 # Clean a solution from unnecessary stuff, i.e. before sending it via mail.
