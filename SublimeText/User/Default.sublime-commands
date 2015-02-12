@@ -1,7 +1,12 @@
 [
-    {
+	{
         "caption": "Clean crmregister IDs",
         "command": "reg_replace",
         "args": {"replacements": ["remove_crmregister_ids"]}
+    },
+    {
+        "caption": "Delete lines with // comments (C#)",
+        "command": "reg_replace",
+        "args": {"replacements": ["delete_comment_lines"]}
     }
 ]
