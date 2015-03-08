@@ -4,10 +4,15 @@
     "use_sub_notify": true,
 
     "replacements": {
-        // Example replacements
         "remove_crmregister_ids": {
             "find": "Id=\"[0-9a-z-]{36}\"",
             "replace": "Id=\"00000000-0000-0000-0000-000000000000\"",
+            "greedy": true,
+            "case": false
+        },
+        "delete_comment_lines": {
+            "find": "^ *//.*$",
+            "replace": "",
             "greedy": true,
             "case": false
         },
