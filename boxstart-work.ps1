@@ -1,5 +1,4 @@
-choco install Firefox -installArgs l=en-US -y
-choco install ConEmu  -y
+choco install ConEmu -y
 choco install 7zip.install -y
 choco install TortoiseGit -y
 choco install filezilla -y
@@ -13,21 +12,28 @@ choco install pushbullet -y
 choco install adblockplusfirefox -y
 choco install skitch -y
 choco install keepass -y
-choco install skype  -y
 choco install Listary  -y
 choco install evernote  -y
+choco install skitch -y
 choco install PsGet -y
-choco install fsviewer -y
 choco install SublimeText3  -y
 choco install SublimeText3.PackageControl -y
 choco install FoxitReader  -y
 choco install f.lux  -y
-choco install tor-browser -y
-choco install winmerge  -y
-choco install teamviewer  -y
-choco install avastfreeantivirus -y
-choco install truecrypt  -y
+choco install tor-browser  -y
+choco install uTorrent -y
+choco install winmerge -y
+choco install linqpad4 -y
 choco install ScriptCs -y
+choco install SwissFileKnife  -y
+choco install HxD  -y
+choco install NugetPackageExplorer  -y
+choco install rdcman  -y
+choco install mysql.workbench  -y
+choco install fiddler4 -y
+choco install procexp -y
+choco install GoogleChrome  -y
+choco install nodejs.install -y
 
 Import-Module PsGet
 Install-Module Jump.Location
@@ -37,24 +43,10 @@ Install-Module PsUrl
 Install-WindowsUpdate
 
 <# Manually install:
-PowerTab		http://powertab.codeplex.com/
-Fences			https://store.stardock.com/ 
-EnhancedSteam	http://firefox.enhancedsteam.com/
+http://powertab.codeplex.com/
 #>
 
 <# 
 Later - not accessible in this scope:
 pip install --upgrade httpie
-
-Other items of interest: 
-choco install linqpad4
-choco install calibre 
-choco install SwissFileKnife 
-
-choco install HxD 
-choco install NugetPackageExplorer 
-choco install rdcman 
-choco install mysql.workbench 
-choco install fiddler4
-choco install procexp
 #>
