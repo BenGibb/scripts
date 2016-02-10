@@ -1,7 +1,7 @@
 SCRIPTS
 =======
 
-* `clean-solution.ps1` - deletes unnecessary objects [bin, pdb, obj, ...] from a solution.
+* `Clear-Solution.psm1` - deletes unnecessary objects [bin, pdb, obj, ...] from a Visual Studio solution.
 * `chocolatey-versions.ps1` - lists current versions of installed packages
 
 SublimeText
