@@ -1,6 +1,7 @@
 import csv
-from collections import namedtuple
 import sqlite3
+
+dropTables =
 
 
 def getMinType(value):
@@ -22,12 +23,11 @@ with open('csv\\{0}.csv'.format(fname), encoding="utf8") as csvfile:
     rdr = csv.reader(csvfile)
     header = next(rdr)
     names = [name for name in header]
-    recordType = namedtuple(fname, names)
     cols = len(header)
     types = ["integer"] * cols
     data = []
     for row in rdr:
-        data.append(recordType._make(row))
+        data.append(row)
         for col in range(cols):
             if types[col] == "text":
                 continue
@@ -38,13 +38,17 @@ with open('csv\\{0}.csv'.format(fname), encoding="utf8") as csvfile:
                     types[col] = colType
 
 conn = sqlite3.connect('pokemonData.db')
-conn.execute('drop table {tableName}'.format(tableName=fname))
+try:
+    conn.execute('drop table {tableName}'.format(tableName=fname))
+except:
+    pass
 conn.execute('create table {tableName} (\n'.format(tableName=fname) +
              ',\n'.join("\t%s %s" % (i[0], i[1]) for i in zip(names, types)) +
              '\n);')
-#conn.execute('INSERT INTO {tableName} VALUES ({cols})'.format(tableName=fname, cols=','.join(['?'] * cols)), data)
+conn.executemany('INSERT INTO {tableName} VALUES (?,?,?)'
+                 .format(tableName=fname, cols=','.join(['?'] * cols)),
+                 data)
 
-for i in data:
-    conn.execute("INSERT INTO ability_names VALUES ({0}, {1}, '{2}')".format(*i))
+# for i in data:     conn.execute("INSERT INTO ability_names VALUES ({0}, {1}, '{2}')".format(*i))
 
 conn.commit()
