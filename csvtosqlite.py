@@ -1,8 +1,8 @@
 import csv
 import sqlite3
+import os
 
-dropTables =
-
+dropTables = True
 
 def getMinType(value):
     try:
@@ -17,38 +17,51 @@ def getMinType(value):
         pass
     return "text"
 
+def processFile(path):
+    with open(path, encoding="utf8") as csvfile:
+        rdr = csv.reader(csvfile)
+        header = next(rdr)
+        names = [name for name in header]
+        cols = len(header)
+        types = ["integer"] * cols
+        data = []
+        for row in rdr:
+            data.append(row)
+            for col in range(cols):
+                if types[col] == "text":
+                    continue
+                colType = getMinType(row[col])
+                if types[col] != colType:
+                    if colType == "text" or \
+                            (colType == "real" and types[col] == "integer"):
+                        types[col] = colType
+        return names, types, data
 
-fname = 'ability_names'
-with open('csv\\{0}.csv'.format(fname), encoding="utf8") as csvfile:
-    rdr = csv.reader(csvfile)
-    header = next(rdr)
-    names = [name for name in header]
-    cols = len(header)
-    types = ["integer"] * cols
-    data = []
-    for row in rdr:
-        data.append(row)
-        for col in range(cols):
-            if types[col] == "text":
-                continue
-            colType = getMinType(row[col])
-            if types[col] != colType:
-                if colType == "text" or \
-                        (colType == "real" and types[col] == "integer"):
-                    types[col] = colType
+def writeFile(db, tableName, names, types, data):
+    cols = len(names)
+    if dropTables:
+        try:
+            conn.execute('drop table {tableName}'.format(tableName=tableName))
+        except:
+            pass
+    db.execute('create table {tableName} (\n'.format(tableName=tableName) +
+                 ',\n'.join("\t%s %s" % (i[0], i[1]) for i in zip(names, types)) +
+                 '\n);')
+    db.executemany('INSERT INTO {tableName} VALUES ({cols})'
+                   .format(tableName=tableName, cols=','.join(['?'] * cols)),
+                   data)
+
+def readWrite(db, fileName):
+    path = 'csv\\{0}.csv'.format(fileName)
+    writeFile(db, fileName, *processFile(path))
+
+def processFile(path):
+    name = os.path.splitext(os.path.basename(path))[0]
+
 
 conn = sqlite3.connect('pokemonData.db')
-try:
-    conn.execute('drop table {tableName}'.format(tableName=fname))
-except:
-    pass
-conn.execute('create table {tableName} (\n'.format(tableName=fname) +
-             ',\n'.join("\t%s %s" % (i[0], i[1]) for i in zip(names, types)) +
-             '\n);')
-conn.executemany('INSERT INTO {tableName} VALUES (?,?,?)'
-                 .format(tableName=fname, cols=','.join(['?'] * cols)),
-                 data)
 
-# for i in data:     conn.execute("INSERT INTO ability_names VALUES ({0}, {1}, '{2}')".format(*i))
+for f in ['genders', 'berries', 'ability_names', 'item_fling_effect_prose']:
+    readWrite(conn, f)
 
 conn.commit()
