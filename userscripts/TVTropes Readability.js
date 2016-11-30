@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         TVTropes readability
 // @namespace    https://zblesk.net/blog
-// @version      0.9
+// @version      0.91
 // @description  Some tweaks for better readability. Increases the font size and colors every even link differently, so you can better navigate the blue soup of many consecutive links. (Try it here: http://tvtropes.org/pmwiki/pmwiki.php/Main/AllBlueEntry ) 
 // @author       zblesk
 // @include      http://tvtropes.org/*
