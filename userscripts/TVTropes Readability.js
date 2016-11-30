@@ -14,5 +14,5 @@
 (function() {
     'use strict';
     $(".page-content a:even").css("color", "#ff7200");
-	$('.page-content').css('font-size', '150%');
+    $('.page-content').css('font-size', '150%');
 })();
