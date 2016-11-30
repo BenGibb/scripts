@@ -13,6 +13,6 @@
 
 (function() {
     'use strict';
-    $(".page-content a:even").css("color", "#ff9900");
+    $(".page-content a:even").css("color", "#ff7200");
 	$('.page-content').css('font-size', '150%');
 })();
