@@ -1,6 +1,10 @@
-iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex
+if (!(Test-Path $PROFILE))  {
+    "" | Set-Content $PROFILE
+}
 
-choco install notepad2-mod 7zip.install git.install TortoiseGit filezilla python3 PsGet winmerge linqpad5 fiddler4 procexp GoogleChrome -y 
+Invoke-WebRequest https://chocolatey.org/install.ps1 -UseBasicParsing | Invoke-Expression
+
+choco install notepad2-mod 7zip.install consolez keepass.install git.install TortoiseGit filezilla python3 PsGet winmerge linqpad5 fiddler4 procexp GoogleChrome -y 
 choco install firefox-dev -pre -packageParameters "l=en-US" -y 
 
 Import-Module PsGet

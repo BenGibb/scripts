@@ -1,4 +1,8 @@
-iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex
+if (!(Test-Path $PROFILE))  {
+    "" | Set-Content $PROFILE
+}
+
+Invoke-WebRequest https://chocolatey.org/install.ps1 -UseBasicParsing | Invoke-Expression
 
 choco install 7zip.install git.install TortoiseGit filezilla putty.portable notepad2-mod paint.net python3 pip Listary PsGet f.lux tor-browser winmerge linqpad HxD fiddler4 procexp GoogleChrome nodejs.install -y 
 
