@@ -8,12 +8,12 @@ function start-server()
   }
 }
 
-function chocolatey-versions()
+function convert-subtitles
 {
-  cver all -localonly
-}
-
-function kill-webservers()
-{
-    kill -processname WebDev.WebServer40
+  param($filename)
+  if (!$filename.endswith('.srt'))
+  {
+    throw "Subtitles only!"
+  }
+  Get-Content -Encoding 1250 $filename | Set-Content -Encoding UTF8 $filename".Utf8.srt"
 }
