@@ -27,6 +27,6 @@ function show-uptime {
 }
 
 function get-youtube-to-mp3 {
-  param ($url)
+  param ([Parameter(Mandatory = $true)]$url)
   youtube-dl -f bestaudio -x --audio-format mp3 --add-metadata $url
 }
