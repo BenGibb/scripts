@@ -10,12 +10,22 @@ function start-server()
 
 function convert-subtitles
 {
-  param($filename)
-  if (!$filename.endswith('.srt'))
+  param(  
+    [Parameter(
+        Position=0, 
+        Mandatory=$true, 
+        ValueFromPipeline=$true,
+        ValueFromPipelineByPropertyName=$true)
+    ]
+    [String[]]$filenames) 
+  foreach ($filename in $filenames)
   {
-    throw "Subtitles only!"
+    if (!$filename.endswith('.srt'))
+    {
+      throw "Subtitles only!"
+    }
+    Get-Content -Encoding 1250 $filename | Set-Content -Encoding UTF8 $filename".Utf8.srt"
   }
-  Get-Content -Encoding 1250 $filename | Set-Content -Encoding UTF8 $filename".Utf8.srt"
 }
 
 function get-uptime {
@@ -30,3 +40,11 @@ function get-youtube-to-mp3 {
   param ([Parameter(Mandatory = $true)]$url)
   youtube-dl -f bestaudio -x --audio-format mp3 --add-metadata $url
 }
+
+function grab-youtube {
+  param ([Parameter(Mandatory = $true)]$url)
+  Push-Location $env:youtube_dl_folder
+  youtube-dl -o '%(title)s - %(uploader)s (%(upload_date)s-%(id)s).%(ext)s' $url
+  Pop-Location
+}
+
