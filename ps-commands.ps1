@@ -17,14 +17,14 @@ function convert-subtitles
         ValueFromPipeline=$true,
         ValueFromPipelineByPropertyName=$true)
     ]
-    [String[]]$filenames) 
-  foreach ($filename in $filenames)
-  {
-    if (!$filename.endswith('.srt'))
+    [String[]]$name) 
+  Process {
+    if (!$name.endswith('.srt'))
     {
       throw "Subtitles only!"
     }
-    Get-Content -Encoding 1250 $filename | Set-Content -Encoding UTF8 $filename".Utf8.srt"
+    Get-Content -Encoding 1250 $name | Set-Content -Encoding UTF8 $name".Utf8.srt"
+    Remove-Item $name
   }
 }
 
