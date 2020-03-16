@@ -48,3 +48,42 @@ function grab-youtube {
   Pop-Location
 }
 
+
+function Send-MailgunEmail($from, $to, $subject, $body, $emaildomain, $apikey) {
+  $idpass = "api:$apikey"
+  $basicauth = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes($idpass))
+  $headers = @{
+      Authorization = "Basic $basicauth"
+  }
+  $url = "https://api.mailgun.net/v3/$emaildomain/messages"
+  $body = @{
+      from = $from;
+      to = $to;
+      subject = $subject;
+      text = $body;
+  }
+  Invoke-RestMethod -Uri $url -Method Post -Headers $headers -Body $body
+}
+
+
+# ---- email helpers -----
+# These will only help if you already have a dictionary with settings imported, like this: 
+# $mailgun_params = @{
+#   from = 'sender@example.com';
+#   emaildomain = 'example.com';
+#   apikey = 'key-SupeRSECret'
+# }
+
+function email($to, $subject, $body)
+{
+    Send-MailgunEmail $to $subject $body @mailgun_params
+}
+
+function email-file($to, $filename)
+{
+    $subject = Split-Path $filename -leaf
+    $text = Get-Content $filename | Out-String
+    Send-MailgunEmail $to $subject $text @mailgun_params
+}
+
+# ---- end email helpers ----
