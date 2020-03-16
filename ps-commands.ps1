@@ -48,6 +48,9 @@ function grab-youtube {
   Pop-Location
 }
 
+function get-externalip {
+  Invoke-RestMethod http://ipinfo.io/json | Select-Object -exp ip
+}
 
 function Send-MailgunEmail($from, $to, $subject, $body, $emaildomain, $apikey) {
   $idpass = "api:$apikey"
